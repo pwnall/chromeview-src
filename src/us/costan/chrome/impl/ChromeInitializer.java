@@ -28,16 +28,7 @@ public class ChromeInitializer {
     initializeCalled_ = true;
 
     // Initialization lifted from
-    //     chromium/src/android_webview/javatests/org/chromium/android_webview/test/AndroidWebViewTestRunnerApplication
-
-    CommandLine.initFromFile("/data/local/chrome-command-line");
-
-    ResourceExtractor.setMandatoryPaksToExtract(MANDATORY_PAKS);
-    AwBrowserProcess.loadLibrary();
-    AwBrowserProcess.start(context);
-
-    // Initialization lifted from
-    //     chromium/src/android_webview/javatests/org/chromium/android_webview/test/AwTestResourceProvider
+    //     chromium/src/android_webview/test/shell/src/org/chromium/android_webview/shell/AwShellResourceProvider
 
     AwResource.setResources(context.getResources());
 
@@ -46,6 +37,16 @@ public class ChromeInitializer {
 
     AwResource.STRING_DEFAULT_TEXT_ENCODING =
         us.costan.chrome.R.string.default_encoding;
+
+    // Initialization lifted from
+    //     chromium/src/android_webview/test/shell/src/org/chromium/android_webview/shell/AwShellApplication
+
+    CommandLine.initFromFile("/data/local/chrome-command-line");
+
+    ResourceExtractor.setMandatoryPaksToExtract(MANDATORY_PAKS);
+    ResourceExtractor.setExtractImplicitLocaleForTesting(false);
+    AwBrowserProcess.loadLibrary();
+    AwBrowserProcess.start(context);
   }
 
   /** Ensures that initialize() is only called once. */

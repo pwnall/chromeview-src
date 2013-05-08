@@ -136,5 +136,6 @@ cd ~/chromium/src
 sudo ./build/install-build-deps-android.sh
 sudo ./build/install-build-deps.sh --no-syms --lib32 --arm --no-prompt
 cd ~/chromium
+source src/build/android/envsetup.sh
 gclient runhooks || \
     echo "Ignore the error above if this is a first-time setup"

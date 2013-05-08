@@ -14,6 +14,7 @@ import us.costan.chrome.impl.ChromeInitializer;
 import us.costan.chrome.impl.ChromeSettingsProxy;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -29,6 +30,7 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.inputmethod.EditorInfo;
@@ -66,6 +68,16 @@ public class ChromeView extends FrameLayout {
 
     if (isInEditMode()) {
       return;  // Chromium isn't loaded in edit mode.
+    }
+
+    try {
+      Activity activity = (Activity)context;
+      activity.getWindow().setFlags(
+          WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+          WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
+
+    } catch(ClassCastException e) {
+      // Hope that hardware acceleration is enabled.
     }
 
     SharedPreferences sharedPreferences = context.getSharedPreferences(
@@ -844,7 +856,7 @@ public class ChromeView extends FrameLayout {
   }
 
   //// Forward a bunch of calls to the Chromium view.
-  //// Lifted from chromium/src/android_webview/javatests/src/org/chromium/android_webview/test/AwTestContainerView
+  //// Lifted from chromium/src/android_webview/test/shell/src/org/chromium/android_webview/test/AwTestContainerView
 
   public void destroy() {
     awContents_.destroy();
@@ -1089,7 +1101,7 @@ public class ChromeView extends FrameLayout {
 
   /** Glue that passes calls from the Chromium view to its container (us). */
   private class ChromeInternalAcccessAdapter implements AwContents.InternalAccessDelegate {
-    // Lifted from chromium/src/android_webview/test/shell/src/org/chromium/android_webview/test/AwTestContainerView
+    //// Lifted from chromium/src/android_webview/test/shell/src/org/chromium/android_webview/test/AwTestContainerView
     @Override
     public boolean drawChild(Canvas canvas, View child, long drawingTime) {
       return ChromeView.this.drawChild(canvas, child, drawingTime);
@@ -1132,8 +1144,25 @@ public class ChromeView extends FrameLayout {
     }
     @Override
     public boolean requestDrawGL(Canvas canvas) {
-      // TODO(pwnall): an actual implementation, this switches to sw rendering
-      return false;
+      if (canvas != null) {
+        if (canvas.isHardwareAccelerated()) {
+          // TODO(pwnall): figure out what AwContents wants from us, and do it;
+          //               most likely something to do with
+          //               AwContents.getAwDrawGLFunction()
+          return false;
+        } else {
+          return false;
+        }
+      } else {
+        if (ChromeView.this.isHardwareAccelerated()) {
+          // TODO(pwnall): figure out what AwContents wants from us, and do it;
+          //               most likely something to do with
+          //               AwContents.getAwDrawGLFunction()
+          return false;
+        } else {
+          return false;
+        }
+      }
     }
   }
 }

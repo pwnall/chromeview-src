@@ -28,8 +28,10 @@ import android.webkit.WebView.FindListener;
 
 /** Glue that passes calls from the Chromium view to a WebChromeClient. */
 public class ChromeAwContentsClientProxy extends AwContentsClient {
-  // Inspired from chromium/.src/android_webview/javatests/src/org/chromium/android_webview/tests/*ContentsClient
-  // Inspired from http://developer.android.com/reference/android/webkit/WebChromeClient.html
+  // Inspired from
+  //     chromium/src/android_webview/test/shell/src/org/chromium/android_webview/test/NullContentsClient
+  //     chromium/src/android_webview/javatests/src/org/chromium/android_webview/tests/*ContentsClient
+  //     http://developer.android.com/reference/android/webkit/WebChromeClient.html
 
   /** The view whose clients are proxied by this instance. */
   private final ChromeView view_;
@@ -269,8 +271,11 @@ public class ChromeAwContentsClientProxy extends AwContentsClient {
   }
   @Override
   public void onFormResubmission(Message dontResend, Message resend) {
-    if (viewClient_ != null)
+    if (viewClient_ != null) {
       viewClient_.onFormResubmission(view_, dontResend, resend);
+    } else {
+      dontResend.sendToTarget();
+    }
   }
   @Override
   public void doUpdateVisitedHistory(String url, boolean isReload) {
