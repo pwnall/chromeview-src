@@ -135,7 +135,10 @@ sed -i "/u'safesync_url': u''/ s/u'safesync_url': u''/u'safesync_url': u'https:\
 cd ~/chromium/src
 sudo ./build/install-build-deps-android.sh
 sudo ./build/install-build-deps.sh --no-syms --lib32 --arm --no-prompt
+
 cd ~/chromium
+set +o nounset  # Chromium scripts are messy.
 source src/build/android/envsetup.sh
+set -o nounset  # Catch un-initialized variables.
 gclient runhooks || \
     echo "Ignore the error above if this is a first-time setup"
