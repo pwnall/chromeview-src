@@ -134,7 +134,7 @@ fi
 sed -i "/u'safesync_url': u''/ s/u'safesync_url': u''/u'safesync_url': u'https:\/\/chromium-status.appspot.com\/git-lkgr'/" .gclient
 cd ~/chromium/src
 sudo ./build/install-build-deps-android.sh
-sudo ./build/install-build-deps.sh --no-syms --lib32 --arm --no-prompt
+yes | sudo ./build/install-build-deps.sh --no-syms --arm --lib32
 
 cd ~/chromium
 set +o nounset  # Chromium scripts are messy.

@@ -81,8 +81,9 @@ cp -r third_party/eyesfree/src/android/java/src/* ~/crbuilds/$REV/src/
 # Strip a ContentView file that's not supposed to be here.
 rm ~/crbuilds/$REV/src/org/chromium/content/common/common.aidl
 
-# Get rid of the .svn directory in eyesfree.
+# Get rid of the version control directory in eyesfree.
 rm -rf ~/crbuilds/$REV/src/com/googlecode/eyesfree/braille/.svn
+rm -rf ~/crbuilds/$REV/src/com/googlecode/eyesfree/braille/.git
 
 # Browser components.
 cp -r components/web_contents_delegate_android/android/java/src/* \
@@ -94,8 +95,8 @@ cp -r components/navigation_interception/android/java/src/* \
 cp -r out/Release/gen/templates/* ~/crbuilds/$REV/src/
 
 # JARs.
-cp -r out/Release/lib.java/guava_javalib.jar ~/crbuilds/$REV/src/libs/
-cp -r out/Release/lib.java/jsr_305_javalib.jar ~/crbuilds/$REV/src/libs/
+cp -r out/Release/lib.java/guava_javalib.jar ~/crbuilds/$REV/libs/
+cp -r out/Release/lib.java/jsr_305_javalib.jar ~/crbuilds/$REV/libs/
 
 # android_webview generated sources. Must come after all the other sources.
 cp -r android_webview/java/generated_src/* ~/crbuilds/$REV/src/
