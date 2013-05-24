@@ -72,7 +72,7 @@ sudo mkdir -p /etc/nginx/sites-available
 sudo tee /etc/nginx/sites-available/crbuilds.conf > /dev/null <<EOF
 server {
   listen 80;
-  root $HOME/crbuilds;
+  root $HOME/crbuild.www;
   location / {
     autoindex on;
   }
@@ -116,14 +116,22 @@ sudo apt-get install -y ia32-libs libc6-dev-i386 g++-multilib
 # https://code.google.com/p/chromium/wiki/UsingGit
 # http://dev.chromium.org/developers/how-tos/get-the-code
 if [ ! -d ~/chromium ] ; then
-  if [ ! -z $CHROMIUM_DIR ] ; then
-    sudo mkdir -p "$CHROMIUM_DIR"
-    sudo chown $USER "$CHROMIUM_DIR"
-    chmod 0755 "$CHROMIUM_DIR"
-    ln -s "$CHROMIUM_DIR" ~/chromium
+  if [ ! -z $CRBUILD_DIR ] ; then
+    sudo mkdir -p "$CRBUILD_DIR"
+    sudo mkdir -p "$CRBUILD_DIR/chromium"
+    sudo mkdir -p "$CRBUILD_DIR/crbuild.www"
+    sudo chown $USER "$CRBUILD_DIR"
+    sudo chown $USER "$CRBUILD_DIR/chromium"
+    sudo chown $USER "$CRBUILD_DIR/crbuild.www"
+    chmod 0755 "$CRBUILD_DIR"
+    chmod 0755 "$CRBUILD_DIR/chromium"
+    chmod 0755 "$CRBUILD_DIR/crbuild.www"
+    ln -s "$CRBUILD_DIR/chromium" ~/chromium
+    ln -s "$CRBUILD_DIR/crbuild.www" ~/crbuild.www
   fi
-  if [ -z "$CHROMIUM_DIR" ] ; then
+  if [ -z "$CRBUILD_DIR" ] ; then
     mkdir -p ~/chromium
+    mkdir -p ~/crbuild.www
   fi
 fi
 cd  ~/chromium

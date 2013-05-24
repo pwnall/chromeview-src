@@ -5,10 +5,9 @@ set -o errexit  # Stop the script on the first error.
 set -o nounset  # Catch un-initialized variables.
 
 # Prepare the output area.
-mkdir -p ~/crbuilds
-mkdir -p ~/crbuilds/archives
-mkdir -p ~/crbuilds/staging
-mkdir -p ~/crbuilds/logs
+mkdir -p ~/crbuild.www/archives
+mkdir -p ~/crbuild.www/staging
+mkdir -p ~/crbuild.www/logs
 
 # Build Chromium.
 # https://code.google.com/p/chromium/wiki/UsingGit
@@ -46,7 +45,7 @@ fi
 # Package the build.
 cd ~/chromium/src
 REV=$(git rev-parse HEAD)
-STAGING=~/crbuilds/staging/$REV
+STAGING=~/crbuild.www/staging/$REV
 rm -rf $STAGING
 mkdir -p $STAGING
 
@@ -114,12 +113,12 @@ if [ -f ~/.build_x86 ] ; then
   ARCHIVE="$ARCHIVE-x86"
 fi
 cd $STAGING
-tar -czvf "~/crbuilds/$ARCHIVE.tar.gz" .
+tar -czvf "~/crbuild.www/$ARCHIVE.tar.gz" .
 
 # Clean up the build directory.
 cd ~/crbuilds
-rm -rf ~/crbuilds/$REV
+rm -rf $STAGING
 
 # Update the latest-build info.
-echo -n $REV > ~/crbuilds/LATEST_REV
-echo -n $ARCHIVE.tar.gz > ~/crbuilds/LATEST
+echo -n $REV > ~/crbuild.www/LATEST_REV
+echo -n $ARCHIVE.tar.gz > ~/crbuild.www/LATEST

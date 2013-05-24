@@ -103,7 +103,7 @@ These are the manual steps for setting up a VM. They only need to be done once.
     needs to be set once.
 
     ```bash
-    export CHROMIUM_DIR=/mnt/chromium
+    export CRBUILD_DIR=/mnt/crbuild
     ```
 
 ### Building on Amazon EC2
@@ -134,7 +134,7 @@ copy-pasted one by one in the VM's ssh console. Please open an issue or pull
 request if the script fails.
 
 If this is the first time the Chromium source code is downloaded and
-`$CHROMIUM_DIR` is defined, the directory at that path will be created and
+`$CRBUILD_DIR` is defined, the directory at that path will be created and
 symlinked into `~/chromium`. The source code can be moved around, as long as
 the symlink is updated.
 
