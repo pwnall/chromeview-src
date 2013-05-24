@@ -111,3 +111,11 @@ if [ -f ~/.build-x86 ] ; then
 fi
 cd ~/crbuilds/$REV
 tar -czvf "../$ARCHIVE.tar.gz" .
+
+# Clean up the build directory.
+cd ~/crbuilds
+rm -rf ~/crbuilds/$REV
+
+# Update the latest-build info.
+echo -n $REV > ~/crbuilds/LATEST_REV
+echo -n $ARCHIVE.tar.gz > ~/crbuilds/LATEST
