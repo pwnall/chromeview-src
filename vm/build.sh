@@ -4,6 +4,11 @@
 set -o errexit  # Stop the script on the first error.
 set -o nounset  # Catch un-initialized variables.
 
+# Prepare the output area.
+mkdir -p ~/crbuilds
+mkdir -p ~/crbuilds/archives
+mkdir -p ~/crbuilds/staging
+mkdir -p ~/crbuilds/logs
 
 # Build Chromium.
 # https://code.google.com/p/chromium/wiki/UsingGit
@@ -41,14 +46,15 @@ fi
 # Package the build.
 cd ~/chromium/src
 REV=$(git rev-parse HEAD)
-rm -rf ~/crbuilds/$REV
-mkdir -p ~/crbuilds/$REV
+STAGING=~/crbuilds/staging/$REV
+rm -rf $STAGING
+mkdir -p $STAGING
 
 # Structure.
-mkdir -p ~/crbuilds/$REV/assets
-mkdir -p ~/crbuilds/$REV/libs
-mkdir -p ~/crbuilds/$REV/res
-mkdir -p ~/crbuilds/$REV/src
+mkdir -p $STAGING/assets
+mkdir -p $STAGING/libs
+mkdir -p $STAGING/res
+mkdir -p $STAGING/src
 
 
 # ContentShell core -- use this if android_webview doesn't work out.
@@ -59,58 +65,56 @@ mkdir -p ~/crbuilds/$REV/src
 #scp -r content/shell_apk/android/java/res/* ~/crbuilds/$REV/res/
 
 # android_webview
-cp out/Release/android_webview_apk/assets/*.pak ~/crbuilds/$REV/assets/
-cp -r out/Release/android_webview_apk/libs/* ~/crbuilds/$REV/libs/
-rm ~/crbuilds/$REV/libs/**/gdbserver
-cp -r android_webview/java/src/* ~/crbuilds/$REV/src/
+cp out/Release/android_webview_apk/assets/*.pak $STAGING/assets/
+cp -r out/Release/android_webview_apk/libs/* $STAGING/libs/
+rm $STAGING/libs/**/gdbserver
+cp -r android_webview/java/src/* $STAGING/src/
 
 ## Dependencies inferred from android_webview/Android.mk
 
 # Resources.
-cp -r content/public/android/java/resource_map/* ~/crbuilds/$REV/src/
-cp -r ui/android/java/resource_map/* ~/crbuilds/$REV/src/
+cp -r content/public/android/java/resource_map/* $STAGING/src/
+cp -r ui/android/java/resource_map/* $STAGING/src/
 
 # ContentView dependencies.
-cp -r base/android/java/src/* ~/crbuilds/$REV/src/
-cp -r content/public/android/java/src/* ~/crbuilds/$REV/src/
-cp -r media/base/android/java/src/* ~/crbuilds/$REV/src/
-cp -r net/android/java/src/* ~/crbuilds/$REV/src/
-cp -r ui/android/java/src/* ~/crbuilds/$REV/src/
-cp -r third_party/eyesfree/src/android/java/src/* ~/crbuilds/$REV/src/
+cp -r base/android/java/src/* $STAGING/src/
+cp -r content/public/android/java/src/* $STAGING/src/
+cp -r media/base/android/java/src/* $STAGING/src/
+cp -r net/android/java/src/* $STAGING/src/
+cp -r ui/android/java/src/* $STAGING/src/
+cp -r third_party/eyesfree/src/android/java/src/* $STAGING/src/
 
 # Strip a ContentView file that's not supposed to be here.
-rm ~/crbuilds/$REV/src/org/chromium/content/common/common.aidl
+rm $STAGING/src/org/chromium/content/common/common.aidl
 
 # Get rid of the version control directory in eyesfree.
-rm -rf ~/crbuilds/$REV/src/com/googlecode/eyesfree/braille/.svn
-rm -rf ~/crbuilds/$REV/src/com/googlecode/eyesfree/braille/.git
+rm -rf $STAGING/src/com/googlecode/eyesfree/braille/.svn
+rm -rf $STAGING/src/com/googlecode/eyesfree/braille/.git
 
 # Browser components.
-cp -r components/web_contents_delegate_android/android/java/src/* \
-      ~/crbuilds/$REV/src/
-cp -r components/navigation_interception/android/java/src/* \
-      ~/crbuilds/$REV/src/
+cp -r components/web_contents_delegate_android/android/java/src/* $STAGING/src/
+cp -r components/navigation_interception/android/java/src/* $STAGING/src/
 
 # Generated files.
-cp -r out/Release/gen/templates/* ~/crbuilds/$REV/src/
+cp -r out/Release/gen/templates/* $STAGING/src/
 
 # JARs.
-cp -r out/Release/lib.java/guava_javalib.jar ~/crbuilds/$REV/libs/
-cp -r out/Release/lib.java/jsr_305_javalib.jar ~/crbuilds/$REV/libs/
+cp -r out/Release/lib.java/guava_javalib.jar $STAGING/libs/
+cp -r out/Release/lib.java/jsr_305_javalib.jar $STAGING/libs/
 
 # android_webview generated sources. Must come after all the other sources.
-cp -r android_webview/java/generated_src/* ~/crbuilds/$REV/src/
+cp -r android_webview/java/generated_src/* $STAGING/src/
 
 # Archive.
-ARCHIVE="$REV"
-if [ -f ~/.build-arm ] ; then
+ARCHIVE="archives/$REV"
+if [ -f ~/.build_arm ] ; then
   ARCHIVE="$ARCHIVE-arm"
 fi
-if [ -f ~/.build-x86 ] ; then
+if [ -f ~/.build_x86 ] ; then
   ARCHIVE="$ARCHIVE-x86"
 fi
-cd ~/crbuilds/$REV
-tar -czvf "../$ARCHIVE.tar.gz" .
+cd $STAGING
+tar -czvf "~/crbuilds/$ARCHIVE.tar.gz" .
 
 # Clean up the build directory.
 cd ~/crbuilds
