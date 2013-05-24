@@ -82,7 +82,7 @@ cp -r third_party/eyesfree/src/android/java/src/* ~/crbuilds/$REV/src/
 rm ~/crbuilds/$REV/src/org/chromium/content/common/common.aidl
 
 # Get rid of the .svn directory in eyesfree.
-rm -r ~/crbuilds/$REV/src/com/googlecode/eyesfree/braille/.svn
+rm -rf ~/crbuilds/$REV/src/com/googlecode/eyesfree/braille/.svn
 
 # Browser components.
 cp -r components/web_contents_delegate_android/android/java/src/* \

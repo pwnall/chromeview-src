@@ -80,8 +80,17 @@ These are the manual steps for setting up a VM. They only need to be done once.
     scp ~/Downloads/jdk-6u*-linux-x64.bin crbuild@crbuild.local:~/jdk6.bin
     ```
 
-9. Set up the VM builds target platform(s). Choosing more than one platform
-   will result in no incremental building being done.
+9. If the VM is on a VM server, install and use `mosh` instead of `ssh`.
+
+    ```bash
+    # ssh crbuild@crbuild.local
+    sudo apt-get install -y mosh
+    exit
+    mosh crbuild@crbuild.local
+    ```
+
+10. Set up the VM builds target platform(s). Choosing more than one platform
+    will result in no incremental building being done.
 
     ```bash
     # ssh crbuild@crbuild.local
@@ -89,13 +98,25 @@ These are the manual steps for setting up a VM. They only need to be done once.
     touch ~/.build_x86
     ```
 
-10. Optionally set the path of the directory that will hold the Chromium source
+11. Optionally set the path of the directory that will hold the Chromium source
     code to. This is only used the first time the setup script runs, so it only
     needs to be set once.
 
     ```bash
     export CHROMIUM_DIR=/mnt/chromium
     ```
+
+### Building on Amazon EC2
+
+This setup has been tested on OpenStack, using a 64-bit
+[Ubuntu 12.04LTS cloud image](http://cloud-images.ubuntu.com/releases/lucid/release/),
+and will likely work on Amazon EC2 as well.
+
+When using a VM server, open the following ports on the VM.
+
+* TCP 22 - ssh
+* TCP 80 - http, for downloading builds
+* UDP 60000:610000 - mosh, because ssh seems to break down during chrome builds
 
 
 ## VM Setup
@@ -127,3 +148,6 @@ are done infrequently, the setup script above should be ran before every build.
 # ssh crbuild@crbuild.local
 curl -fLsS https://github.com/pwnall/chromeview/raw/master/vm/build.sh | bash
 ```
+
+The build results can be downloaded by visiting the VM's IP address in a Web
+browser.
