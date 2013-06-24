@@ -145,8 +145,9 @@ sudo ./build/install-build-deps-android.sh
 yes | sudo ./build/install-build-deps.sh --no-syms --arm --lib32
 
 cd ~/chromium
+
 set +o nounset  # Chromium scripts are messy.
-source src/build/android/envsetup.sh
+. src/build/android/envsetup.sh  # "source" is bash-only, whereas "." is POSIX.
 set -o nounset  # Catch un-initialized variables.
 gclient runhooks || \
     echo "Ignore the error above if this is a first-time setup"

@@ -25,7 +25,8 @@ CPUS=$(grep -c 'processor' /proc/cpuinfo)
 
 if [ -f ~/.build_arm ] ; then
   set +o nounset  # Chromium scripts are messy.
-  source build/android/envsetup.sh --target-arch=arm
+  # NOTE: "source" is bash-only, "." is POSIX. 
+  . build/android/envsetup.sh --target-arch=arm
   set -o nounset  # Catch un-initialized variables.
   android_gyp
   ninja -C out/Release -k0 -j$CPUS libwebviewchromium android_webview_apk \
@@ -34,7 +35,7 @@ fi
 
 if [ -f ~/.build_x86 ] ; then
   set +o nounset  # Chromium scripts are messy.
-  source build/android/envsetup.sh --target-arch=x86
+  . build/android/envsetup.sh --target-arch=x86
   set -o nounset  # Catch un-initialized variables.
   android_gyp
   ninja -C out/Release -k0 -j$CPUS libwebviewchromium android_webview_apk \
