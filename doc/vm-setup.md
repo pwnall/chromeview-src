@@ -126,7 +126,7 @@ so it can be ran to bring a VM's software up to date.
 
 ```bash
 # ssh crbuild@crbuild.local
-curl -fLsS https://github.com/pwnall/chromeview-src/raw/master/vm/setup.sh | sh
+curl -fLsS https://github.com/pwnall/chromeview-src/raw/master/vm/setup.sh | bash
 ```
 
 If the script fails, the steps in [setup.sh](vm/setup.sh) can be
@@ -146,7 +146,7 @@ are done infrequently, the setup script above should be ran before every build.
 
 ```bash
 # ssh crbuild@crbuild.local
-curl -fLsS https://github.com/pwnall/chromeview/raw/master/vm/build.sh | bash
+curl -fLsS https://github.com/pwnall/chromeview-src/raw/master/vm/build.sh | bash
 ```
 
 The build results can be downloaded by visiting the VM's IP address in a Web
