@@ -114,7 +114,7 @@ if [ -f ~/.build_x86 ] ; then
   ARCHIVE="$ARCHIVE-x86"
 fi
 cd $STAGING
-tar -czvf "~/crbuild.www/$ARCHIVE.tar.gz" .
+tar -czvf "$HOME/crbuild.www/$ARCHIVE.tar.gz" .
 
 # Clean up the build directory.
 cd ~/crbuilds
