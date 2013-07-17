@@ -13,3 +13,9 @@ local.properties
 
 # Vim.
 *.sw*
+
+# Downloaded build.
+build
+
+# Build VM configuration.
+config/buildvms.sh

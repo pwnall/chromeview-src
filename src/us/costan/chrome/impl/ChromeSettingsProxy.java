@@ -30,11 +30,11 @@ public class ChromeSettingsProxy extends ChromeSettings {
 
   @Override
   public void setSupportZoom(boolean support) {
-    contents_.setSupportZoom(support);
+    web_.setSupportZoom(support);
   }
   @Override
   public boolean supportZoom() {
-    return contents_.supportZoom();
+    return web_.supportZoom();
   }
   @Override
   public void setMediaPlaybackRequiresUserGesture(boolean require) {
@@ -46,19 +46,19 @@ public class ChromeSettingsProxy extends ChromeSettings {
   }
   @Override
   public void setBuiltInZoomControls(boolean enabled) {
-    contents_.setBuiltInZoomControls(enabled);
+    web_.setBuiltInZoomControls(enabled);
   }
   @Override
   public boolean getBuiltInZoomControls() {
-    return contents_.getBuiltInZoomControls();
+    return web_.getBuiltInZoomControls();
   }
   @Override
   public void setDisplayZoomControls(boolean enabled) {
-    contents_.setDisplayZoomControls(enabled);
+    web_.setDisplayZoomControls(enabled);
   }
   @Override
   public boolean getDisplayZoomControls() {
-    return contents_.getDisplayZoomControls();
+    return web_.getDisplayZoomControls();
   }
   @Override
   public void setAllowFileAccess(boolean allow) {
@@ -86,12 +86,11 @@ public class ChromeSettingsProxy extends ChromeSettings {
   }
   @Override
   public void setSaveFormData(boolean save) {
-    // TODO Auto-generated method stub
+    web_.setSaveFormData(save);
   }
   @Override
   public boolean getSaveFormData() {
-    // TODO Auto-generated method stub
-    return false;
+    return web_.getSaveFormData();
   }
   @Override
   public void setSavePassword(boolean save) {

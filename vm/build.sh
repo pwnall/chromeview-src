@@ -75,6 +75,7 @@ cp -r android_webview/java/src/* $STAGING/src/
 # Resources.
 cp -r content/public/android/java/resource_map/* $STAGING/src/
 cp -r ui/android/java/resource_map/* $STAGING/src/
+cp -r chrome/android/java/res/* $STAGING/res/
 
 # ContentView dependencies.
 cp -r base/android/java/src/* $STAGING/src/

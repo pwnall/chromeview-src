@@ -1,0 +1,8 @@
+# The URL of the VM that does ARM builds.
+ARM_BUILDVM=http://arm.buildbot.org
+
+# The URL of the VM that does X86 builds.
+#
+# This can be the same as the URL above, if the same VM is used for both
+# architectures.
+X86_BUILDVM=http://x86.buildbot.org
