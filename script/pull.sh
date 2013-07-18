@@ -9,6 +9,7 @@ mkdir -p src/
 cp -r ../chromeview/src/us src/
 
 rm -rf res/
-mkdir -p res/
+mkdir -p res
 cp -r ../chromeview/res/raw res/
+mkdir -p res/values
 cp -r ../chromeview/res/values/strings.xml res/values/

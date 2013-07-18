@@ -73,9 +73,36 @@ cp -r android_webview/java/src/* $STAGING/src/
 ## Dependencies inferred from android_webview/Android.mk
 
 # Resources.
-cp -r content/public/android/java/resource_map/* $STAGING/src/
-cp -r ui/android/java/resource_map/* $STAGING/src/
-cp -r chrome/android/java/res/* $STAGING/res/
+mkdir -p $STAGING/res2/
+cp -r ui/android/java/res/* $STAGING/res2/
+rename 's/\.xml$/_android_ui.xml/' $STAGING/res2/values*/*.xml
+cp -r $STAGING/res2/* $STAGING/res/
+rm -rf $STAGING/res2
+
+mkdir -p $STAGING/res2/
+cp -r chrome/android/java/res/* $STAGING/res2/
+rename 's/\.xml$/_android_chrome.xml/' $STAGING/res2/values*/*.xml
+cp -r $STAGING/res2/* $STAGING/res/
+rm -rf $STAGING/res2
+
+mkdir -p $STAGING/res2/
+cp -r content/public/android/java/res/* $STAGING/res2/
+rename 's/\.xml$/_android_content.xml/' $STAGING/res2/values*/*.xml
+cp -r $STAGING/res2/* $STAGING/res/
+rm -rf $STAGING/res2
+
+mkdir -p $STAGING/res2/
+cp -r content/shell/android/java/res/* $STAGING/res2/
+rename 's/\.xml$/_android_content_shell.xml/' $STAGING/res2/values*/*.xml
+cp -r $STAGING/res2/* $STAGING/res/
+rm -rf $STAGING/res2
+
+# Generated string resources.
+mkdir -p $STAGING/res/values
+cp -r ./out/Release/gen/ui_java/res_grit/values/* $STAGING/res/values
+cp -r ./out/Release/gen/chrome_java/res_grit/values/* $STAGING/res/values
+cp -r ./out/Release/gen/content_java/res_grit/values/* $STAGING/res/values
+
 
 # ContentView dependencies.
 cp -r base/android/java/src/* $STAGING/src/
@@ -95,6 +122,7 @@ rm -rf $STAGING/src/com/googlecode/eyesfree/braille/.git
 # Browser components.
 cp -r components/web_contents_delegate_android/android/java/src/* $STAGING/src/
 cp -r components/navigation_interception/android/java/src/* $STAGING/src/
+cp -r components/autofill/core/browser/android/java/src/* $STAGING/src/
 
 # Generated files.
 cp -r out/Release/gen/templates/* $STAGING/src/

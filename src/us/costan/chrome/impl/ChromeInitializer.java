@@ -6,6 +6,7 @@ import org.chromium.content.browser.ResourceExtractor;
 import org.chromium.content.common.CommandLine;
 
 import us.costan.chrome.ChromeView;
+import org.chromium.ui.R;
 import android.content.Context;
 
 /**
@@ -32,11 +33,10 @@ public class ChromeInitializer {
 
     AwResource.setResources(context.getResources());
 
-    AwResource.RAW_LOAD_ERROR = us.costan.chrome.R.raw.blank_html;
-    AwResource.RAW_NO_DOMAIN = us.costan.chrome.R.raw.blank_html;
+    AwResource.RAW_LOAD_ERROR = R.raw.blank_html;
+    AwResource.RAW_NO_DOMAIN = R.raw.blank_html;
 
-    AwResource.STRING_DEFAULT_TEXT_ENCODING =
-        us.costan.chrome.R.string.default_encoding;
+    AwResource.STRING_DEFAULT_TEXT_ENCODING = R.string.default_encoding;
 
     // Initialization lifted from
     //     chromium/src/android_webview/test/shell/src/org/chromium/android_webview/shell/AwShellApplication
