@@ -133,6 +133,13 @@ If the script fails, the steps in [setup.sh](vm/setup.sh) can be
 copy-pasted one by one in the VM's ssh console. Please open an issue or pull
 request if the script fails.
 
+The VM should be rebooted after the first time this script runs.
+
+```bash
+# ssh crbuild@crbuild.local
+sudo reboot
+```
+
 If this is the first time the Chromium source code is downloaded and
 `$CRBUILD_DIR` is defined, the directory at that path will be created and
 symlinked into `~/chromium`. The source code can be moved around, as long as

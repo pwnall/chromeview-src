@@ -67,21 +67,33 @@ EOF
 
 # Web server for the builds.
 mkdir -p ~/crbuilds
-sudo apt-get install -y nginx-full
-sudo mkdir -p /etc/nginx/sites-available
-sudo tee /etc/nginx/sites-available/crbuilds.conf > /dev/null <<EOF
-server {
-  listen 80;
-  root $HOME/crbuild.www;
-  location / {
-    autoindex on;
-  }
-}
+sudo apt-get install -y apache2
+sudo mkdir -p /etc/apache2/sites-available
+sudo tee /etc/apache2/sites-available/001-crbuilds.conf > /dev/null <<EOF
+<VirtualHost *:80>
+	ServerAdmin webmaster@localhost
+
+	DocumentRoot /home/crbuild/crbuild.www
+	<Directory />
+		Options FollowSymLinks
+		AllowOverride None
+	</Directory>
+	<Directory /home/crbuild/crbuild.www>
+		Options Indexes FollowSymLinks MultiViews
+		AllowOverride None
+		Order allow,deny
+		allow from all
+	</Directory>
+
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	LogLevel warn
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
 EOF
-sudo ln -s -f /etc/nginx/sites-available/crbuilds.conf \
-              /etc/nginx/sites-enabled/crbuilds.conf
-sudo rm -f /etc/nginx/sites-enabled/default
-sudo /etc/init.d/nginx restart
+sudo ln -s -f /etc/apache2/sites-available/001-crbuilds.conf \
+              /etc/apache2/sites-enabled/001-crbuilds.conf
+sudo rm -f /etc/apache2/sites-enabled/*default
+sudo /etc/init.d/apache2 restart
 
 # Git.
 sudo apt-get install -y git
