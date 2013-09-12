@@ -66,7 +66,6 @@ debconf debconf/priority select critical
 EOF
 
 # Web server for the builds.
-mkdir -p ~/crbuilds
 sudo apt-get install -y apache2
 sudo mkdir -p /etc/apache2/sites-available
 sudo tee /etc/apache2/sites-available/001-crbuilds.conf > /dev/null <<EOF
