@@ -85,9 +85,9 @@ sudo tee /etc/apache2/sites-available/001-crbuilds.conf > /dev/null <<EOF
 		allow from all
 	</Directory>
 
-	ErrorLog ${APACHE_LOG_DIR}/error.log
+	ErrorLog /var/log/apache2/error.log
 	LogLevel warn
-	CustomLog ${APACHE_LOG_DIR}/access.log combined
+	CustomLog /var/log/apache2/access.log combined
 </VirtualHost>
 EOF
 sudo ln -s -f /etc/apache2/sites-available/001-crbuilds.conf \
