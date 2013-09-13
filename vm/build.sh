@@ -25,7 +25,7 @@ CPUS=$(grep -c 'processor' /proc/cpuinfo)
 
 if [ -f ~/.build_arm ] ; then
   set +o nounset  # Chromium scripts are messy.
-  # NOTE: "source" is bash-only, "." is POSIX. 
+  # NOTE: "source" is bash-only, "." is POSIX.
   . build/android/envsetup.sh --target-arch=arm
   set -o nounset  # Catch un-initialized variables.
   android_gyp
@@ -146,7 +146,7 @@ cd $STAGING
 tar -czvf "$HOME/crbuild.www/$ARCHIVE.tar.gz" .
 
 # Clean up the build directory.
-cd ~/crbuilds
+cd ~/crbuild.www
 rm -rf $STAGING
 
 # Update the latest-build info.
