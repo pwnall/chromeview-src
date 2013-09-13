@@ -72,12 +72,12 @@ sudo tee /etc/apache2/sites-available/001-crbuilds.conf > /dev/null <<EOF
 <VirtualHost *:80>
 	ServerAdmin webmaster@localhost
 
-	DocumentRoot /home/crbuild/crbuild.www
+	DocumentRoot /home/$USER/crbuild.www
 	<Directory />
 		Options FollowSymLinks
 		AllowOverride None
 	</Directory>
-	<Directory /home/crbuild/crbuild.www>
+	<Directory /home/$USER/crbuild.www>
 		Options Indexes FollowSymLinks MultiViews
 		AllowOverride None
 		Order allow,deny
