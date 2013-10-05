@@ -4,9 +4,9 @@ import org.chromium.android_webview.AwBrowserProcess;
 import org.chromium.android_webview.AwResource;
 import org.chromium.content.browser.ResourceExtractor;
 import org.chromium.content.common.CommandLine;
+import org.chromium.ui.R;
 
 import us.costan.chrome.ChromeView;
-import org.chromium.ui.R;
 import android.content.Context;
 
 /**

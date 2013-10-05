@@ -69,13 +69,13 @@ public class ChromeView extends FrameLayout {
     if (isInEditMode()) {
       return;  // Chromium isn't loaded in edit mode.
     }
-    
+
     try {
       Activity activity = (Activity)context;
       activity.getWindow().setFlags(
           WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
           WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
-            
+
     } catch(ClassCastException e) {
       // Hope that hardware acceleration is enabled.
     }
@@ -1175,6 +1175,10 @@ public class ChromeView extends FrameLayout {
     @Override
     public void super_scrollTo(int scrollX, int scrollY) {
       ChromeView.super.scrollTo(scrollX, scrollY);
+    }
+    @Override
+    public int super_getScrollBarStyle() {
+      return ChromeView.super.getScrollBarStyle();
     }
   }
 }
