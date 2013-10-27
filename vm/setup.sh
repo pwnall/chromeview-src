@@ -150,7 +150,6 @@ if [ ! -f .gclient ] ; then
   ~/depot_tools/fetch android --nosvn=True || \
       echo "Ignore the error above if this is a first-time setup"
 fi
-sed -i "/u'safesync_url': u''/ s/u'safesync_url': u''/u'safesync_url': u'https:\/\/chromium-status.appspot.com\/git-lkgr'/" .gclient
 cd ~/chromium/src
 sudo ./build/install-build-deps-android.sh
 yes | sudo ./build/install-build-deps.sh --no-syms --arm --lib32

@@ -12,10 +12,10 @@ mkdir -p ~/crbuild.www/logs
 # Build Chromium.
 # https://code.google.com/p/chromium/wiki/UsingGit
 if [ ! -z GCLIENT_SYNC ] ; then
-  cd ~/chromium/
-  # Syncing twice because of crbugs.com/237234
-  gclient sync --jobs 16 --reset --delete_unversioned_trees
-  gclient sync --jobs 16 --reset --delete_unversioned_trees
+  cd ~/chromium/src
+  git checkout lkgr
+  git pull
+  gclient sync --force --delete_unversioned_trees
 fi
 
 cd ~/chromium/src
